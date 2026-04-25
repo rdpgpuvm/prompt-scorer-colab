@@ -1,15 +1,15 @@
 """
-Colab Importable Module for Prompt Quality Scoring
+Colab Importable Module for Prompt Quality Scoring (Gemini version)
 
 Usage in any Colab notebook:
-    !pip install -q langchain langchain-openai
+    !pip install -q langchain langchain-google-genai
     !curl -sO https://raw.githubusercontent.com/rdpgpuvm/prompt-scorer-colab/main/colab_import.py
     
     from colab_import import score_prompt, print_score, run_test_prompts
     
     # Set API key
     import os
-    os.environ['OPENAI_API_KEY'] = 'sk-...'  # or use userdata.get()
+    os.environ['GEMINI_API_KEY'] = '...'  # or use userdata.get()
     
     # Score one prompt
     result = score_prompt("What is AI?")
@@ -21,7 +21,7 @@ Usage in any Colab notebook:
 import os
 import json
 import re
-from langchain_openai import ChatOpenAI
+from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.messages import SystemMessage, HumanMessage
 
 SYSTEM_PROMPT = """You are an expert AI prompt engineer. Evaluate the user's prompt on 5 criteria:
@@ -70,10 +70,10 @@ def _extract_json(text: str) -> dict:
 
 def score_prompt(user_prompt: str, api_key: str | None = None) -> dict:
     """Score a single prompt. Auto-fetches API key from env if not provided."""
-    llm = ChatOpenAI(
-        model="gpt-4o-mini",
+    llm = ChatGoogleGenerativeAI(
+        model="gemini-1.5-flash",
         temperature=0.1,
-        api_key=api_key or os.getenv("OPENAI_API_KEY"),
+        api_key=api_key or os.getenv("GEMINI_API_KEY"),
     )
     response = llm.invoke([
         SystemMessage(content=SYSTEM_PROMPT),

@@ -1,13 +1,13 @@
 """
-Prompt Quality Scoring Agent - Standalone module
-Requires: pip install langchain langchain-openai
-Usage: OPENAI_API_KEY=sk-... python scorer.py "Your prompt here"
+Prompt Quality Scoring Agent - Standalone module (Gemini version)
+Requires: pip install langchain langchain-google-genai
+Usage: GEMINI_API_KEY=... python scorer.py "Your prompt here"
 """
 import os
 import json
 import re
 import sys
-from langchain_openai import ChatOpenAI
+from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.messages import SystemMessage, HumanMessage
 
 SYSTEM_PROMPT = """You are an expert AI prompt engineer. Evaluate the user's prompt on 5 criteria:
@@ -47,10 +47,10 @@ def extract_json(text: str) -> dict:
 
 
 def score_prompt(user_prompt: str, api_key: str | None = None) -> dict:
-    llm = ChatOpenAI(
-        model="gpt-4o-mini",
+    llm = ChatGoogleGenerativeAI(
+        model="gemini-1.5-flash",
         temperature=0.1,
-        api_key=api_key or os.getenv("OPENAI_API_KEY"),
+        api_key=api_key or os.getenv("GEMINI_API_KEY"),
     )
     response = llm.invoke([
         SystemMessage(content=SYSTEM_PROMPT),
@@ -89,7 +89,7 @@ def print_score(result: dict):
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        print("Usage: OPENAI_API_KEY=sk-... python scorer.py 'Your prompt here'")
+        print("Usage: GEMINI_API_KEY=... python scorer.py 'Your prompt here'")
         sys.exit(1)
     result = score_prompt(sys.argv[1])
     print_score(result)
