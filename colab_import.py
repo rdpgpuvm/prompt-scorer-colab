@@ -71,7 +71,7 @@ def _extract_json(text: str) -> dict:
 def score_prompt(user_prompt: str, api_key: str | None = None) -> dict:
     """Score a single prompt. Auto-fetches API key from env if not provided."""
     llm = ChatGoogleGenerativeAI(
-        model="gemini-1.5-flash",
+        model="gemini-2.0-flash",
         temperature=0.1,
         api_key=api_key or os.getenv("GEMINI_API_KEY"),
     )
