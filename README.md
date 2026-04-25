@@ -1,55 +1,49 @@
 # 🔮 Prompt Quality Scoring Agent (Colab)
 
+Google Colab notebooks for AI-powered prompt evaluation. Two versions available:
+
+## Versions
+
+### Gemini (Free Tier)
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/rdpgpuvm/prompt-scorer-colab/blob/main/Prompt_Quality_Scoring_Agent.ipynb)
 
-Google Colab notebook for AI-powered prompt evaluation using LangChain + Google Gemini.
+- **Notebook:** `Prompt_Quality_Scoring_Agent.ipynb`
+- **Model:** `gemini-2.0-flash`
+- **API Key:** `GEMINI_API_KEY`
+- **Note:** Free tier has rate limits (may hit quota)
+
+### OpenAI
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/rdpgpuvm/prompt-scorer-colab/blob/main/openai_version.ipynb)
+
+- **Notebook:** `openai_version.ipynb`
+- **Model:** `gpt-4o-mini`
+- **API Key:** `OPENAI_API_KEY`
+- **Note:** Requires OpenAI credits
 
 ## Quick Start
 
-### Option 1: Open in Colab (Recommended)
-Click the badge above or go to:  
-https://colab.research.google.com/github/rdpgpuvm/prompt-scorer-colab/blob/main/Prompt_Quality_Scoring_Agent.ipynb
+1. Pick a version above and click **Open in Colab**
+2. Set API key in Colab secrets (left sidebar → 🔑 Secrets)
+3. Run all cells (Runtime → Run all)
 
-### Option 2: Import in Your Own Notebook
+## Import in Your Own Notebook
+
 ```python
-# In any Colab notebook, run:
+# Gemini version
 !pip install -q langchain langchain-google-genai
 !curl -sO https://raw.githubusercontent.com/rdpgpuvm/prompt-scorer-colab/main/colab_import.py
 from colab_import import score_prompt, print_score
 
-# Set your API key
-import os
-os.environ['GEMINI_API_KEY'] = '...'  # or use Colab secrets
-
-# Score any prompt
-result = score_prompt("Your prompt here")
-print_score(result)
+# OpenAI version
+!pip install -q langchain langchain-openai
+!curl -sO https://raw.githubusercontent.com/rdpgpuvm/prompt-scorer-colab/main/openai_scorer.py
+from openai_scorer import score_prompt, print_score
 ```
-
-### Option 3: Clone & Run Locally
-```bash
-git clone https://github.com/rdpgpuvm/prompt-scorer-colab.git
-cd prompt-scorer-colab
-pip install langchain langchain-google-genai
-GEMINI_API_KEY=... python scorer.py "Your prompt here"
-```
-
-## Setup
-
-1. Get a Gemini API key: https://aistudio.google.com/app/apikey
-2. In Colab: Left sidebar → 🔑 Secrets → Add `GEMINI_API_KEY`
-3. Run all cells
-
-## How It Works
-
-- Uses **LangChain** with `ChatGoogleGenerativeAI` (gemini-1.5-flash)
-- Evaluates prompts on 5 criteria: Clarity, Specificity, Context, Format, Persona
-- Returns structured scores + actionable suggestions
-- API key handled via Colab secrets (secure, no hardcoding)
 
 ## Files
 
-- `Prompt_Quality_Scoring_Agent.ipynb` — Main notebook (Colab-ready)
-- `scorer.py` — Standalone CLI version
-- `colab_import.py` — Importable module for any notebook
-- `README.md` — This file
+- `Prompt_Quality_Scoring_Agent.ipynb` — Gemini notebook
+- `openai_version.ipynb` — OpenAI notebook
+- `scorer.py` — Gemini CLI version
+- `openai_scorer.py` — OpenAI CLI version
+- `colab_import.py` — Gemini importable module
